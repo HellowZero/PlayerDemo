@@ -1,0 +1,24 @@
+﻿<Application x:Class="PlayerDemo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PlayerDemo"
+             StartupUri="MainWindow.xaml"
+             xmlns:flwpf="clr-namespace:FlyleafLib.Controls.WPF;assembly=FlyleafLib.Controls.WPF">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Slider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/FlyleafLib.Controls.WPF;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/PlayerDemo;component/Style/Themes/Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/PlayerDemo;component/Style/Controls.Slider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/PlayerDemo;component/Style/Controls.Button.xaml" />
+              
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="flwpf:FlyleafBar" BasedOn="{StaticResource FlyleafBarDefault1}"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

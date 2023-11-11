@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+    <Color x:Key="LightColor">#FFFFFF</Color>
+    <Color x:Key="DarkColor">#303030</Color>
+    <Color x:Key="WhiteColor">#FFFFFFFF</Color>
+    <!--50%透明背景-->
+    <Color x:Key="BackGroundColorHalfOpacity">#80A9A9A9</Color>
+    <!--不透明背景-->
+    <Color x:Key="BackGroundColor">#A9A9A9</Color>
+    <!--类白位刷-->
+    <SolidColorBrush x:Key="LightColorBrush" Color="{StaticResource LightColor}"  options:Freeze="true"/>
+    <!--类黑位刷-->
+    <SolidColorBrush x:Key="DarkColorBrush" Color="{StaticResource DarkColor}" options:Freeze="true"/>
+    <!--0.5透明类黑背景位刷-->
+    <SolidColorBrush x:Key="BackColorHalfOpacityBrush" Color="{StaticResource BackGroundColorHalfOpacity}" options:Freeze="true"/>
+    <!--不透明类黑背景位刷-->
+    <SolidColorBrush x:Key="BackColorBrush" Color="{StaticResource  BackGroundColor}" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="WhiteBrush"   Color="{StaticResource WhiteColor}" />
+</ResourceDictionary>
