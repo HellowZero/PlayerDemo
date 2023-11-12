@@ -96,8 +96,12 @@ public partial class MainViewModel : ObservableObject
         }
 
     }
-
-
+    [RelayCommand]
+    private void FullScreenWin()
+    {
+        bool IsFullScreen = Player.Host.Player_GetFullScreen();
+        Player.Host.Player_SetFullScreen(!IsFullScreen);
+    }
     private void CurrentWindow_Loaded(object sender, RoutedEventArgs e)
     {
         if (Engine.IsLoaded)
@@ -155,20 +159,20 @@ public partial class MainViewModel : ObservableObject
 
         Player = new Player(config);
 
-                    // If the user requests reverse playback allocate more frames once
-            Player.PropertyChanged += (o, e) =>
+        // If the user requests reverse playback allocate more frames once
+        Player.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName == "ReversePlayback")
             {
-                if (e.PropertyName == "ReversePlayback")
-                {
-                    if (playerConfig.Decoder.MaxVideoFrames < 80)
-                        playerConfig.Decoder.MaxVideoFrames = 80;
+                if (playerConfig.Decoder.MaxVideoFrames < 80)
+                    playerConfig.Decoder.MaxVideoFrames = 80;
 
-                
-                }
-                else if (e.PropertyName == nameof(Player.Status) && Player.Activity.Mode == ActivityMode.Idle)
-                    Player.Activity.ForceActive();
 
-            };
+            }
+            else if (e.PropertyName == nameof(Player.Status) && Player.Activity.Mode == ActivityMode.Idle)
+                Player.Activity.ForceActive();
+
+        };
     }
 
     private Config DefaultConfig()
