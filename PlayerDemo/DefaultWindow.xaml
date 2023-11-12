@@ -1,0 +1,92 @@
+﻿<controls:MetroWindow x:Class="PlayerDemo.DefaultWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlayerDemo"
+        mc:Ignorable="d"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+         xmlns:vm="clr-namespace:PlayerDemo.ViewModels"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:fl="clr-namespace:FlyleafLib.Controls.WPF;assembly=FlyleafLib"
+        d:DataContext="{d:DesignInstance vm:DefaultViewModel}"
+                     
+                      BorderBrush="Transparent"
+                      WindowTitleBrush="Transparent"
+        Title="{Binding Player.Playlist.Selected.Title}" Height="650" Width="800" Background="Black">
+    <Grid  >
+        <fl:FlyleafHost   x:Name="host" Player="{Binding Player}"  KeyBindings="Surface">
+            <Grid HorizontalAlignment="Center" DataContext="{Binding HostDataContext}" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border CornerRadius="5" Grid.Row="1" Grid.RowSpan="3" Background="Black" Opacity="0.35"></Border>
+                <Grid Grid.Row="1">
+                    <!--左边操作栏-->
+                    <StackPanel Orientation="Horizontal">
+                        <Button  Margin="0,0,0,0"  Command="{Binding PlayActionCommand}" Width="32" Height="32" HorizontalAlignment="Right" Style="{StaticResource CustomMetroCircleButtonStyle}">
+                            <iconPacks:PackIconMaterialLight Foreground="White" Kind="File" />
+                        </Button>
+                        <Button  x:Name="Play"  Command="{Binding Player.Commands.TogglePlayPause}" Width="32" Height="32"  VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="播放"   >
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource CustomMetroCircleButtonStyle}">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <iconPacks:PackIconMaterialLight Foreground="White" Kind="Play" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Player.Status}" Value="Playing">
+                                            <Setter Property="Content" >
+                                                <Setter.Value>
+                                                    <iconPacks:PackIconMaterialLight Foreground="White" Kind="Pause" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                    <!--右边操作栏-->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="FullScreen" ToolTip="全屏"  Margin="0,0,10,0" Command="{Binding FullScreenWinCommand}"  Width="32" Height="32" HorizontalAlignment="Right" Style="{StaticResource CustomMetroCircleButtonStyle}">
+                            <iconPacks:PackIconMaterialLight Foreground="White" Kind="Fullscreen" />
+                        </Button>
+                        <iconPacks:PackIconMaterialDesign Kind="VolumeMute" Foreground="White" VerticalAlignment="Center"></iconPacks:PackIconMaterialDesign>
+                        <Slider  Style="{DynamicResource  MetroCircleSlider}" Foreground="{DynamicResource SecondaryHueMidBrush}" Focusable="False" VerticalAlignment="Center" Width="100"  Minimum="0" Maximum="{Binding Player.Config.Player.VolumeMax, Mode=OneWay}" d:Maximum="150" d:Value="75" Value="{Binding Player.Audio.Volume}"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2" Margin="5"   VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Foreground="White" HorizontalAlignment="Left"   VerticalAlignment="Center" Text="{Binding Player.CurTime, Converter={StaticResource TicksToTime}}" d:Text="00:00:00"/>
+                    <Slider Grid.Column="1" 
+                            Style="{StaticResource MetroCircleSlider}" 
+                            IsSelectionRangeEnabled="True" 
+                            SelectionStart="{Binding RelativeSource={RelativeSource Self}, Path=Value, Mode=OneWay}"
+                            VerticalAlignment="Center" 
+                            Value="{Binding Player.CurTime, Mode=TwoWay, Converter={StaticResource TicksToSeconds}}"
+                            Maximum="{Binding Player.Duration, Converter={StaticResource TicksToSeconds}}">
+                        <Slider.SelectionEnd>
+                            <MultiBinding Converter="{StaticResource SumConverter}">
+                                <Binding Path="SelectionStart" RelativeSource="{RelativeSource Self}" Mode="OneWay"/>
+                                <Binding Path="Player.BufferedDuration" Converter="{StaticResource TicksToSeconds}" Mode="OneWay"/>
+                            </MultiBinding>
+                        </Slider.SelectionEnd>
+                    </Slider>
+                    <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{Binding Player.Duration, Converter={StaticResource TicksToTime}}" d:Text="00:00:00"/>
+
+                </Grid>
+                <!--标题-->
+                <TextBlock  VerticalAlignment="Center" Grid.Row="3" FontStyle="Italic" Foreground="White" Margin="5,0,0,5" Text="{Binding Player.Playlist.Selected.Title}"/>
+            </Grid>
+        </fl:FlyleafHost>
+    </Grid>
+</controls:MetroWindow>
