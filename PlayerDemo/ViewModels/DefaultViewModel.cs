@@ -17,6 +17,13 @@ public partial class DefaultViewModel : ObservableObject
         CurrentWindow = window;
 
         CurrentWindow.Loaded += CurrentWindow_Loaded;
+        CurrentWindow.SizeChanged += CurrentWindow_SizeChanged;
+        
+    }
+
+    private void CurrentWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+     
     }
 
     private Player player;
@@ -35,6 +42,12 @@ public partial class DefaultViewModel : ObservableObject
         set => SetProperty(ref config, value);
     }
 
+    private double playerControlWidth;
+    public double PlayerControlWidth
+    {
+        get => playerControlWidth;
+        set => SetProperty(ref playerControlWidth, value);
+    }
     private string uriString;
 
     public string UriString
@@ -53,7 +66,7 @@ public partial class DefaultViewModel : ObservableObject
 
     static bool runOnce;
     Config playerConfig;
-    bool ReversePlaybackChecked;
+ 
 
     [RelayCommand]
     private void PlayAction()
@@ -134,7 +147,7 @@ public partial class DefaultViewModel : ObservableObject
         {
             if (e.PropertyName == "ReversePlayback")
             {
-                if (playerConfig.Decoder.MaxVideoFrames < 80)
+                if (playerConfig?.Decoder.MaxVideoFrames < 80)
                     playerConfig.Decoder.MaxVideoFrames = 80;
 
 

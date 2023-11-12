@@ -1,4 +1,6 @@
 ﻿using MahApps.Metro.Controls;
+using PlayerDemo.ViewModels;
+using System.Windows;
 
 namespace PlayerDemo;
 
@@ -16,6 +18,15 @@ public partial class DefaultWindow : MetroWindow
         InitializeComponent();
         mainViewModel = new DefaultViewModel(this);
         this.DataContext = mainViewModel;
+        host.Overlay.SizeChanged += Overlay_SizeChanged;
+    }
+
+    private void Overlay_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
+    {
+        if (sender is Window Overlay)
+        {
+            mainViewModel.PlayerControlWidth = Overlay.ActualWidth * 0.8;
+        }
 
     }
 }

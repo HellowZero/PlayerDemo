@@ -28,7 +28,7 @@ public partial class MainViewModel : ObservableObject
                         = AvailableWindows.Both,
             KeepRatioOnResize = true,
             OpenOnDrop = AvailableWindows.Both,
-
+            CornerRadius= new CornerRadius(5),
             PreferredLandscapeWidth = 800,
             PreferredPortraitHeight = 600
         };
